@@ -6,11 +6,11 @@
 # The following variables need to be provided to the pipeline:
 #
 # - subscriptionId           : Subscription Id.
-# - snapshotNameOs           : Name for snapshot containing the OS.
-# - snapshotNameData         : Name for snapshot containing the Data.
-# - dest-container           : Location for Managed Disks.
-# - dest-blob                : Name for Managed Disk containing the OS.
-# - storage-account          : Name for Managed Disk containing the data.
+# - source-container         : Name for source container.
+# - source-blob              : Name for source blob containing OS.
+# - dest-container           : Name for destination container.
+# - dest-blob                : Name for destination blob containing OS.
+# - storage-account          : Name for Storage account.
 #
 #
 # This pipeline also expects an Azure (Resource Manager) service connection in Azure DevOps with the name 'MyAzureServiceConnection'.
@@ -24,19 +24,11 @@ pool:
   
 variables:
   subscriptionId: "0ac447d7-fbc3-4d3d-84d4-37bb9a71e089"
-  source-container: "snapshot-rg"
-  source-blob: "swedencentral"
-  osDiskName: "easec-vm_OsDisk_1_man"
-  dataDiskName: "easec-vm_DataDisk_1_man"
-  diskSizeOs: 128
-  diskSizeData: 40
-  vhdUriOS: "https://snapshottestsa.blob.core.windows.net/snapshot/easec-vm_OsDisk_1_snap.vhd"
-  vhdUriData: "https://snapshottestsa.blob.core.windows.net/snapshot/easec-vm_DataDisk_1_snap.vhd"
-  storageType: "Premium_LRS"
-  osType: "windows"
-  hyperVGeneration: "v2"
-  vmSize: "Standard_DS1_v2"
-  virtualMachineName: "easec-vm"
+  source-container: "iscala-archive"
+  source-blob: "easec-vm_OsDisk_1_snap.vhd"
+  dest-container: "snapshot"
+  dest-blob: "easec-vm_OsDisk_1_snap.vhd"
+  storage-account: snapshottestsa
 
 stages:
 - stage: Provision
