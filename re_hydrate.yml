@@ -1,3 +1,69 @@
+# This pipeline will:
+# - Provision an Azure VM.
+# 
+# 
+#
+# The following variables need to be provided to the pipeline:
+#
+# - subscriptionId           : Subscription Id.
+# - resourceGroupName        : The name for the Resource Group where vm will be created.
+# - snapshotNameOs           : Name for snapshot containing the OS.
+# - snapshotNameData         : Name for snapshot containing the Data.
+# - location                 : Location for Managed Disks.
+# - osDiskName               : Name for Managed Disk containing the OS.
+# - dataDiskName             : Name for Managed Disk containing the data.
+# - diskSizeOs               : The size for disk containing OS.
+# - diskSizeData             : The size for disk containing data.
+# - vhdUriOS                 : Uri to image in Storage Account, for the OS.
+# - vhdUriData               : Uri to image in Storage Account, for the data.
+# - storageType              : Storage type for Managed Disk
+# - osType                   : Type of OS (linux, windows)
+# - hyperVGeneration         : Generation for HyperV (v1/v2).
+# - vmSize                   : Size for vm.
+# - virtualMachineName       : Name for vm.
+#
+#
+# This pipeline also expects an Azure (Resource Manager) service connection in Azure DevOps with the name 'MyAzureServiceConnection'.
+
+
+trigger: none
+pr: none
+
+pool:
+  name: easec-pool
+  
+variables:
+  subscriptionId: "0ac447d7-fbc3-4d3d-84d4-37bb9a71e089"
+  resourceGroupName: "snapshot-rg"
+  location: "swedencentral"
+  osDiskName: "easec-vm_OsDisk_1_man"
+  dataDiskName: "easec-vm_DataDisk_1_man"
+  diskSizeOs: 128
+  diskSizeData: 40
+  vhdUriOS: "https://snapshottestsa.blob.core.windows.net/snapshot/easec-vm_OsDisk_1_snap.vhd"
+  vhdUriData: "https://snapshottestsa.blob.core.windows.net/snapshot/easec-vm_DataDisk_1_snap.vhd"
+  storageType: "Premium_LRS"
+  osType: "windows"
+  hyperVGeneration: "v2"
+  vmSize: "Standard_DS1_v2"
+  virtualMachineName: "easec-vm"
+
+stages:
+- stage: Provision
+  jobs:
+  - job:
+    steps:
+     - task: AzureCLI@2
+       inputs:
+         azureSubscription: 'MyAzureServiceConnection'
+         scriptType: pscore
+         scriptLocation: inlineScript
+         inlineScript: |
+          az disk create --resource-group "$(resourceGroupName)" --name "$(osDiskName)" --sku "$(storageType)" --location "$(location)" --size-gb "$(diskSizeOs)" --source "$(vhdUriOS)"
+          az disk create --resource-group "$(resourceGroupName)" --name "$(dataDiskName)" --sku "$(storageType)" --location "$(location)" --size-gb "$(diskSizeData)" --source "$(vhdUriData)"
+          az vm create --name "$(virtualMachineName)" --resource-group "$(resourceGroupName)" --os-type "$(osType)" --size "$(vmSize)" --enable-agent "true" --attach-os-disk "$(osDiskName)" --attach-data-disks "$(dataDiskName)"
+
+
 az storage blob copy start \
     --source-container <source-container> \
     --source-blob <source-blob> \
