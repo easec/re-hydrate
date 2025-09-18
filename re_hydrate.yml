@@ -1,1 +1,9 @@
-
+az storage blob copy start \
+    --source-container <source-container> \
+    --source-blob <source-blob> \
+    --destination-container <dest-container> \
+    --destination-blob <dest-blob> \
+    --account-name <storage-account> \
+    --tier hot \
+    --rehydrate-priority standard \
+    --auth-mode login
