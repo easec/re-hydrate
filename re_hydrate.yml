@@ -27,7 +27,7 @@ variables:
   source-container: "iscala-archive"
   source-blob: "easec-vm_DataDisk_1_snap.vhd"
   dest-container: "snapshot"
-  dest-blob: "easec-vm_ODataDisk_1_snap.vhd"
+  dest-blob: "easec-vm_DataDisk_1_snap.vhd"
   storage-account: snapshottestsa
 
 stages:
