@@ -25,9 +25,9 @@ pool:
 variables:
   subscriptionId: "0ac447d7-fbc3-4d3d-84d4-37bb9a71e089"
   source-container: "iscala-archive"
-  source-blob: "easec-vm_OsDisk_1_snap.vhd"
+  source-blob: "easec-vm_DataDisk_1_snap.vhd"
   dest-container: "snapshot"
-  dest-blob: "easec-vm_OsDisk_1_snap.vhd"
+  dest-blob: "easec-vm_ODataDisk_1_snap.vhd"
   storage-account: snapshottestsa
 
 stages:
