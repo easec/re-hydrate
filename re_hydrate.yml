@@ -42,4 +42,4 @@ stages:
          scriptType: pscore
          scriptLocation: inlineScript
          inlineScript: |
-          az storage blob copy start --source-container "$(source-container)" --source-blob "$(source-blob)" --destination-container "$(dest-container)" --destination-blob "$(dest-blob)" --blob-type "$(blobType)" --account-name "$(storage-account)" --tier hot --rehydrate-priority standard
+          az storage blob copy start --source-container "$(source-container)" --source-blob "$(source-blob)" --destination-container "$(dest-container)" --destination-blob "$(dest-blob)" --destination-blob-type "$(blobType)" --account-name "$(storage-account)" --tier hot --rehydrate-priority standard
