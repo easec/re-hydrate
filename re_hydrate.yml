@@ -29,13 +29,13 @@ variables:
   source-container: "iscala-archive"
   source-blob-os: "easec-vm_OsDisk_1_snap.vhd"
   source-blob-data: "easec-vm_DataDisk_1_snap.vhd"
-  dest-container: "archive"
+  dest-container: "snapshot"
   dest-blob-os: "easec-vm_OsDisk_1_snap.vhd"
   dest-blob-data: "easec-vm_DataDisk_1_snap.vhd"
   storage-account: snapshottestsa
 
 stages:
-- stage: Provision
+- stage: re_hydrate
   jobs:
   - job:
     steps:
