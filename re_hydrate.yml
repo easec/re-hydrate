@@ -45,5 +45,5 @@ stages:
          scriptType: pscore
          scriptLocation: inlineScript
          inlineScript: |
-          az storage blob copy start --source-container "$(source-container)" --source-blob "$(source-blob-os)" --destination-container "$(dest-container)" --destination-blob "$(dest-blob-os)" --account-name "$(storage-account)" --account-key "$(account-key)" --tier hot --rehydrate-priority standard
-          az storage blob copy start --source-container "$(source-container)" --source-blob "$(source-blob-data)" --destination-container "$(dest-container)" --destination-blob "$(dest-blob-data)" --account-name "$(storage-account)" --account-key "$(account-key)" --tier hot --rehydrate-priority standard
+          az storage blob copy start --source-container "$(source-container)" --source-blob "$(source-blob-os)" --destination-container "$(dest-container)" --destination-blob "$(dest-blob-os)" --account-name "$(storage-account)" --sas-token "$(token)" --tier hot --rehydrate-priority standard
+          az storage blob copy start --source-container "$(source-container)" --source-blob "$(source-blob-data)" --destination-container "$(dest-container)" --destination-blob "$(dest-blob-data)" --account-name "$(storage-account)" --sas-token "$(token)" --tier hot --rehydrate-priority standard
