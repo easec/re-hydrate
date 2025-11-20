@@ -60,7 +60,7 @@ stages:
     steps:
      - task: AzureCLI@2
        inputs:
-         azureSubscription: 'MyAzureServiceConnection'
+         azureSubscription: 'AzureServiceConnection'
          scriptType: pscore
          scriptLocation: inlineScript
          inlineScript: |
