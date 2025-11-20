@@ -35,6 +35,25 @@ variables:
   storage-account: snapshottestsa
 
 stages:
+- stage: Check_container_exist
+  jobs:
+  - job:
+    steps:
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'AzureServiceConnection'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            exist=$(az storage container exists --account-name "$(storageAccount)" --sas-token "$(token)" --name "$(containerName)" --query [exists] -o tsv)
+            echo $exist
+            if [ "$exist" = "true" ]; then
+              echo "Container exist"
+            else
+              echo "Container does´nt exist"
+              az storage container create --name "$(containerName)" --account-name "$(storageAccount)" --sas-token "$(token)"
+            fi
+          
 - stage: re_hydrate
   jobs:
   - job:
